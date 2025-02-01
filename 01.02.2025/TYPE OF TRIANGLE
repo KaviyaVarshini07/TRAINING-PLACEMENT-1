@@ -1,0 +1,15 @@
+char* triangleType(int* nums, int numsSize) {
+ static char str[12];
+if(nums[1]+nums[2]<=nums[0]||nums[0]+nums[2]<=nums[1]||nums[1]+nums[0]<=nums[2])
+ strcpy(str, "none");
+else if(nums[1]==nums[2]&&nums[0]==nums[1])
+strcpy(str, "equilateral");
+else if(nums[0]==nums[1]||nums[0]==nums[2]||nums[2]==nums[1])
+strcpy(str, "isosceles");
+else
+strcpy(str, "scalene");
+
+
+
+return str;
+}
