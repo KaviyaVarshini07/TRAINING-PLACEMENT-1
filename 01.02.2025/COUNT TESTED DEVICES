@@ -1,0 +1,9 @@
+int countTestedDevices(int* batteryPercentages, int batteryPercentagesSize) {
+    uint8_t out =0 ;
+    for(uint8_t i = 0 ; i < batteryPercentagesSize ; i++){
+        if((batteryPercentages[i] - out) > 0 ){
+            out++;
+        }
+    }
+    return out;
+}
