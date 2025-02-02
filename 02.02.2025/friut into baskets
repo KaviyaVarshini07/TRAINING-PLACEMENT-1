@@ -1,0 +1,45 @@
+int totalFruit(int* fruits, int fruitsSize) {
+    int tail = 0, head = 0;                 // Basket Pointer
+    int basket1 = -1, basket2 = -1;         // Tracks Fruit Type in Basket
+    int basket1Count = 0, basket2Count = 0; // Tracks Count of items in basket
+    int length = 0, maxLength = 0;
+
+    for (head = 0; head < fruitsSize; head++) {
+        if (basket1 == -1) {
+            basket1 = fruits[head];
+            basket1Count = 1;
+        } else if (fruits[head] == basket1) {
+            basket1Count++;
+        } else if (basket2 == -1) {
+            basket2 = fruits[head];
+            basket2Count = 1;
+        } else if (fruits[head] == basket2) {
+            basket2Count++;
+        } else { // Introducted a 3rd fruit
+            while (basket1Count > 0 && basket2Count > 0) {
+                if (fruits[tail] == basket1) {
+                    basket1Count--;
+                } else if (fruits[tail] == basket2) {
+                    basket2Count--;
+                }
+                tail++;
+            }
+
+            if (basket1Count == 0) {
+                basket1 = fruits[head];
+                basket1Count++;
+            }
+            if (basket2Count == 0) {
+                basket2 = fruits[head];
+                basket2Count++;
+            }
+        }
+
+        length = (head - tail) + 1;
+
+        if (length > maxLength) {
+            maxLength = length;
+        }
+    }
+    return maxLength;
+}
