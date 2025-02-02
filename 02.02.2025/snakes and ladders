@@ -1,0 +1,50 @@
+int snakesAndLadders(int** board, int boardSize, int* boardColSize){
+	const int total = boardSize * boardSize;
+
+	int queue[total];
+	int get = 0, set = 0;
+
+	queue[set] = 1;
+	set += 1;
+	board[boardSize - 1][0] = 0;
+
+	int step = 0;
+
+	do {
+		for (int cnt = set - get; cnt > 0; cnt -= 1){
+			const int cur = queue[get];
+			get += 1;
+
+			if (cur == total){
+				return step;
+			}
+
+			for (int i = 1; i <= 6; i += 1){
+				if (!( cur + i <= total )){
+					break;
+				}
+
+				const int row = (boardSize - 1) - (cur + i - 1) / boardSize;
+				const int col = 
+					( (cur + i - 1) / boardSize % 2 == 0 )? (
+						(cur + i - 1) % boardSize
+					) : (
+						(boardSize - 1) - (cur + i - 1) % boardSize
+					)
+				;
+
+				if (0 == board[row][col]){
+					continue;
+				}
+
+				queue[set] = (-1 == board[row][col])? (cur + i) : (board[row][col]);
+				set += 1;
+				board[row][col] = 0;
+			}
+		}
+
+		step += 1;
+	}while (get < set);
+
+	return -1;
+}
