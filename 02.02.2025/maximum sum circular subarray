@@ -1,0 +1,33 @@
+#define MAX(A,B) (((A) > (B)) ? (A) : (B))
+#define MIN(A,B) (((A) < (B)) ? (A) : (B))
+
+int maxSubarraySumCircular(int* nums, int numsSize) {
+    int index;
+    int Max;
+    int Min;
+    int MaxArray[numsSize];
+    int MinArray[numsSize];
+    int TotalVal = 0;
+
+    if (numsSize == 0) return 0;
+
+    MaxArray[0] = nums[0];
+    Max = MaxArray[0];
+    MinArray[0] = nums[0];
+    Min = MinArray[0];
+
+    TotalVal = nums[0];
+    index = 1;
+    while (index < numsSize)
+    {
+        MaxArray[index] = MAX(nums[index], nums[index] + MaxArray[index - 1]);
+        Max = MAX(Max, MaxArray[index]);
+        MinArray[index] = MIN(nums[index], nums[index] + MinArray[index - 1]);
+        Min = MIN(Min, MinArray[index]);
+        TotalVal += nums[index];
+        index++;
+    }
+
+    if (Max <= 0) return Max;
+    return MAX(Max, TotalVal - Min);
+}
