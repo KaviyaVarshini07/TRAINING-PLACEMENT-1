@@ -1,0 +1,14 @@
+int* sortArray(int* nums, int numsSize, int* returnSize)
+{
+        *returnSize=numsSize;
+        int *a=malloc(sizeof(int)*(*returnSize));
+        long count[100001]={0};                //because -50000<=nums[i]<=50000
+		long k=0,i,j;       
+        for(i=0;i<numsSize;i++)
+                count[nums[i]+50000]++;      //To make 0-indexed array   
+        for(i=0;i<100001;i++)
+                if(count[i]!=0)
+                        for(j=1;j<=count[i];j++)
+                                a[k++]=i-50000;                  
+        return a;
+}
