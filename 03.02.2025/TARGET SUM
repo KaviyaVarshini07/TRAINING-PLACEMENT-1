@@ -1,0 +1,46 @@
+class Solution:
+    def findTargetSumWays(self, nums, target):
+        """
+        Finds the number of ways to assign '+' or '-' to each integer in nums 
+        so that the sum of the resulting expression equals the target.
+
+        Args:
+            nums: A list of integers.
+            target: The target sum.
+
+        Returns:
+            The number of ways to achieve the target sum.
+        """
+
+        dp = {}  # Dictionary to store the number of ways to achieve a certain sum
+
+        def backtrack(index, current_sum):
+            """
+            Recursive helper function to explore all possible combinations.
+
+            Args:
+                index: The current index in the nums array.
+                current_sum: The current sum of the expression.
+
+            Returns:
+                The number of ways to achieve the target sum from the current state.
+            """
+            if index == len(nums):
+                return 1 if current_sum == target else 0
+            if (index, current_sum) in dp:
+                return dp[(index, current_sum)]
+
+            # Try adding the current number
+            pos = backtrack(index + 1, current_sum + nums[index])
+            # Try subtracting the current number
+            neg = backtrack(index + 1, current_sum - nums[index])
+
+            dp[(index, current_sum)] = pos + neg
+            return pos + neg
+
+        return backtrack(0, 0)
+
+# Test the solution with the given input
+nums = [1, 1, 1, 1, 1]
+target = 3
+result = Solution().findTargetSumWays(nums, target)
