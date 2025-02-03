@@ -1,0 +1,33 @@
+class Solution(object):
+    def calcEquation(self, equations, values, queries):
+        """
+        :type equations: List[List[str]]
+        :type values: List[float]
+        :type queries: List[List[str]]
+        :rtype: List[float]
+        """
+        d = collections.defaultdict(list)
+        
+        for i, var in enumerate(equations):
+            a, b = var
+            d[a].append([b, values[i]])
+            d[b].append([a, 1 / values[i]])
+
+        def bfs(src, target):
+            q, visit = deque(), set()
+            if src not in d or target not in d:
+                return -1
+    
+            q.append([src, 1])
+            visit.add(src)
+            while q:
+                n, w = q.popleft()
+                if n == target:
+                    return w
+                for nei, weight in d[n]:
+                    if nei not in visit:
+                        q.append([nei, w * weight])
+                        visit.add(nei)
+            return -1
+
+        return [bfs(q[0], q[1]) for q in queries]        
