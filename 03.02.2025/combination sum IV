@@ -1,0 +1,29 @@
+def func(idx, target, mem, nums):
+    if idx < 0:
+        return 0
+    if target == 0:
+        return 1
+    if target < 0:
+        return 0
+
+    if mem[target] != -1:
+        return mem[target]
+    ans = 0
+    for i in range(len(nums)):
+        ans += func(idx, target - nums[i], mem, nums)
+    mem[target] = ans
+    return ans
+
+
+class Solution(object):
+    # if target in mem:
+
+    def combinationSum4(self, nums, target):
+        # mem = [[-1 for i in range(len(nums))] for j in range(target + 1)]
+        mem = [-1]*(target+1)
+        return func(len(nums) - 1, target, mem, nums)
+        return 1
+
+
+sol = Solution()
+print(sol.combinationSum4([1, 2, 3], 4))
