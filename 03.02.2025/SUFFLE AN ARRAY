@@ -1,0 +1,39 @@
+import random
+class Solution(object):
+
+    def __init__(self, nums):
+        """
+        Initializes the object with the integer array nums.
+        :type nums: List[int]
+        """
+        self.original = nums[:]  # Keep a copy of the original array
+        self.array = nums[:]     # Working copy of the array
+        
+
+    def reset(self):
+        """
+        Resets the array to its original configuration and returns it.
+        :rtype: List[int]
+        """
+        self.array = self.original[:]  # Restore the original array
+        return self.array
+        
+
+    def shuffle(self):
+        """
+        Returns a random shuffling of the array.
+        :rtype: List[int]
+        """
+        for i in range(len(self.array)):
+            # Pick a random index from i to the end of the array
+            swap_index = random.randint(i, len(self.array) - 1)
+            # Swap the current element with the randomly chosen one
+            self.array[i], self.array[swap_index] = self.array[swap_index], self.array[i]
+        return self.array
+        
+
+
+# Your Solution object will be instantiated and called as such:
+# obj = Solution(nums)
+# param_1 = obj.reset()
+# param_2 = obj.shuffle()
