@@ -1,0 +1,31 @@
+class Solution(object):
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        # handle edge cases
+        if len(s) < numRows or numRows == 1: 
+            return s
+
+        # initialise rows and pointers
+        rows = [[] for _ in range(numRows)]
+        row_ptr = 0
+        is_down = True
+
+        # Conversion process
+        for letter in s: 
+            rows[row_ptr].append(letter)
+
+            # logic to reverse direction
+            if row_ptr == 0: 
+                is_down = True
+            elif row_ptr == numRows - 1: 
+                is_down = False
+
+            row_ptr += 1 if is_down else -1
+        
+        # combine each row
+        output = "".join(["".join(row) for row in rows])
+        return output
